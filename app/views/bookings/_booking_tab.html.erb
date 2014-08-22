@@ -1,0 +1,304 @@
+<%= render :partial => "layouts/masseges"%>
+<div class="content new_booking gray_box clearfix">
+ 	<table>
+		<tr>
+			<th class="col1" valign="top"> 
+        <h1>Passenger / Account</h1>
+        <span class="btn_round">?</span>
+      </th>
+      <th class="col2" valign="top">
+        <a href="#" class="btn btn_gray btn_ico"><span class="ico ico_location"></span>Show Suggested Locations</a>
+      </th>
+      <th class="col3" valign="top">
+        <h1>Payment</h1>
+        <span class="btn_round">?</span>
+      </th>
+  	</tr>
+    <%= form_for @booking do |f| %>
+     	<tr>
+     		<td class="col1" valign="top">
+           <hr>
+          <div class="new_booking_item new_booking_account">
+            <ul class="form_wrap clearfix">
+              <li><%= f.text_field :passenger_name, :value => "#{current_user.first_name} #{current_user.last_name}"%></li>
+               <li>
+                <ul>
+                  <li><%= f.text_field :passenger_phone_no, :value => "#{current_user.phone_no}"%></li>
+                  <li><%= f.text_field :passenger_email, :value => "#{current_user.email}"%></li>
+                </ul>
+              </li>
+              <li>
+                <input type="radio" id="main_account_contact" name="account_contact" checked="checked" class="custom_radio"><label for="main_account_contact" class="radiobutton">Main Account Contact</label>
+                <a id="show_minor_contact" href="#" class="btn btn_orange btn_add fl-r">+</a>
+              </li>
+            </ul>
+            <ul id="minor_contact" class="form_wrap clearfix disp-n">
+              <li><input type="text" value="Benjamin Westrup"></li>
+              <li>
+                <ul>
+                  <li><input type="text" value="+447985364480"></li>
+                  <li><input type="text" value="Email Address"></li>
+                </ul>
+              </li>
+              <li>
+                <input type="radio" id="minor_account_contact" name="account_contact" class="custom_radio"><label for="minor_account_contact" class="radiobutton">Main Account Contact</label>
+                <a href="#" class="btn btn_orange btn_add fl-r">+</a>
+              </li>
+            </ul>
+          </div>
+
+          <hr>
+          <div class="new_booking_item new_booking_booking">
+            <h1>Booking</h1>
+            <span class="btn_round">?</span>
+            <ul class="form_wrap clearfix">
+              <li class="clearfix">
+                <span>Pick Up:</span>
+                <%= f.fields_for :pickup_addresses do |pa|%>
+                  <%= pa.text_field :address, :value => "#{params[:pickup_nearest_texi]}" %>
+                  <a id="show_add_via" href="#" class="addvia fl-r">Add Via</a>
+                <%end%>
+              </li>
+              <li id="add_via"class="disp-n">
+                <span>Via:</span>
+                <%= f.text_field :via_address %>
+              </li>
+              <li>
+                <span>Drop Off:</span>
+                <%= f.fields_for :dropoff_addresses do |da|%>
+                  <%= da.text_field :address %>
+                <%end%>
+              </li>
+              <li>
+                <ul>
+                  <li><%= f.text_field :pickup_datetime, :class =>"input_ico input_ico_date datepicker", :placeholder => "Pickup Date"%></li>
+                  <li><%= text_field_tag 'pickup_time1', nil,:class =>"input_ico input_ico_time timespinner",:id => "pickup_time"%></li>
+                  <li><%= f.hidden_field :pickup_time ,:id => "pickup_time_id"%></li>
+                </ul>
+              </li>
+              <li>
+                <ul>
+                  <li><%= f.text_field :return_pickup_datetime, :class=>"input_ico input_ico_date datepicker", :placeholder =>"Return Pickup Date"%></li>
+                  <li><%= text_field_tag 'dropoff_time', nil , :class=>"input_ico input_ico_time timespinner", :id => "dropoff_time"%></li>
+                  <li><%= f.hidden_field :dropoff_time ,:id => "dropoff_time_id"%></li>
+                </ul>
+              </li>
+              <li>
+                <ul>
+                  <li><%= text_field_tag 'number_of_bags', nil , :placeholder=> "Bags",:class=>"number spinner", :id => "number_of_bags" %></li>
+                  <li><%= f.hidden_field :number_of_bags ,:id => "number_of_bags_id"%></li>
+                  <li><%= text_field_tag :number_of_passengers1, nil , :placeholder=> "Passengers", :class=>"number spinner", :id => "number_of_passengers"  %></li>
+                  <li><%= f.hidden_field :number_of_passengers ,:id => "number_of_passengers_id"%></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          <hr>
+          <div class="new_booking_item">
+            <h1>Hours Booked</h1>
+            <ul class="form_wrap clearfix">
+              <li><%= f.text_field :booked_hours, :placeholder=>"Enter the number of hours required if known"%></li>
+            </ul>
+          </div>
+
+          <hr>
+          <div class="new_booking_item">
+            <h1>Flight Info</h1>
+            <ul class="form_wrap clearfix">
+              <li><%= f.text_field :flight_info, :placeholder=>"If flying, enter your flight info"%></li>
+            </ul>
+          </div>
+          </td>
+          <td class="col2"  valign="top">
+          <hr>
+          <%= f.fields_for :vehicle_preferences do |vp| %>
+            <div class="new_booking_item new_booking_vehicle">
+              <h1>Vehicle Preferences</h1>
+              <span class="btn_round">?</span>
+              <ul class="form_wrap clearfix">
+                <li class="fl-l">
+                  <%= vp.select(:vehicle_type_id, VehicleType.all.collect {|p| [ p.vehicle_type, p.id ] }, {}, {:class => "type select_menu"}) %>
+                </li>
+                <li class="fl-l">
+                <%= text_field_tag 'number_of_vehicle1', nil , :placeholder=>"Number",:class=>"number spinner",:id => "number_of_vehicle"%>
+                <%= vp.hidden_field :number_of_vehicle ,:id => "number_of_vehicle_id"%>
+                </li>
+                <li class="fl-r">
+                  <a id="show_another_vehicle" href="#" class="btn btn_orange btn_add">+</a>
+                </li>
+              </ul>
+              <ul id="another_vehicle" class="form_wrap clearfix disp-n">
+                <li class="fl-l">
+                  <%= vp.select(:vehicle_type_id, {}, {:class => "type select_menu"}) %>
+                </li>
+                <li class="fl-l">
+                  <%= text_field_tag 'number_of_vehicle1', nil , :placeholder=>"Number",:class=>"number spinner",:id => "number_of_vehicle1"%>
+
+                </li>
+              </ul>
+            </div>
+          <% end %>
+
+          <hr>
+          <div class="new_booking_fieldset new_booking_extras clearfix">
+            <h1>Extras</h1>
+            <span class="btn_round">?</span>
+            <ul class="form_wrap first fl-l clearfix">
+              <li>
+              	<input id="airport_pickup" type="checkbox" class="custom_checkbox"><label for="airport_pickup" class="checkbox">Airport Pickup</label>
+              </li>
+              <li>
+              	<input id="battery_boosts" type="checkbox" class="custom_checkbox"><label for="battery_boosts" class="checkbox">Battery Boosts</label>
+              </li>
+              <li>
+                <input id="medical_visit" type="checkbox" class="custom_checkbox"><label for="medical_visit" class="checkbox">Medical Visit</label>
+              </li>
+              <li>
+              	<input id="baby_scooter" type="checkbox" class="custom_checkbox"><label for="baby_scooter" class="checkbox">Baby Scooter</label>
+              </li>
+              <li>
+              	<input id="baby_pram" type="checkbox" class="custom_checkbox"><label for="baby_pram" class="checkbox">Baby Pram</label>
+              </li>
+              <li>
+              	<input id="wheelchair" type="checkbox" class="custom_checkbox"><label for="wheelchair" class="checkbox">Wheelchair</label>
+              </li>    
+            </ul>
+            <ul class="form_wrap fl-l clearfix">
+            	<li>
+              	<input id="rush_parcel" type="checkbox" class="custom_checkbox"><label for="rush_parcel" class="checkbox">Rush Parcel Delivery</label>
+              </li>
+              <li>
+              	<input id="event_transportation" type="checkbox" class="custom_checkbox"><label for="event_transportation" class="checkbox">Event Transportation</label>
+              </li>
+              <li>
+              	<input id="luggage" type="checkbox" class="custom_checkbox"><label for="luggage" class="checkbox">Help with Luggage</label>
+              </li>
+              <li>
+                <input id="oversized" type="checkbox" class="custom_checkbox"><label for="oversized" class="checkbox">Oversized Luggage</label>
+              </li>
+              <li>
+              	<input id="multilingual" type="checkbox" class="custom_checkbox"><label for="multilingual" class="checkbox">Multi-Lingual Driver</label>
+              </li>    
+            </ul>
+          </div>
+
+          <hr>
+          <div class="new_booking_fieldset new_booking_accessability clearfix">
+            <h1>Accessability</h1>
+            <span class="btn_round">?</span>
+            <ul class="form_wrap first fl-l clearfix">
+              <li>
+                <input id="access_wheelchair" type="checkbox" class="custom_checkbox"><label for="access_wheelchair" class="checkbox">Wheelchair</label>
+              </li>
+              <li>
+                <input id="carset" type="checkbox" class="custom_checkbox"><label for="carset" class="checkbox">Carseat</label>
+              </li>    
+            </ul>
+            <ul class="form_wrap fl-l clearfix">
+            	<li>
+              	<input id="guide_dob" type="checkbox" class="custom_checkbox"><label for="guide_dob" class="checkbox">Guide Dob</label>
+              </li>
+              <li>
+              	<input id="infant" type="checkbox" class="custom_checkbox"><label for="infant" class="checkbox">Infant</label>
+              </li> 
+            </ul>
+          </div>
+
+          <hr>
+          <div class="new_booking_item new_booking_recurrent">
+            <h1>Recurrent</h1>
+            <span class="btn_round">?</span>
+            <ul class="form_wrap clearfix">
+              <li>
+                <input type="radio" id="single_taxi" name="recurrent" checked="checked" class=""><label class="radiobutton" for="single_taxi">Single Taxi Service</label>
+              </li>
+              <li>
+                <input type="radio" id="recurrent_taxi" name="recurrent" class=""><label for="recurrent_taxi" class="radiobutton">Recurrent Taxi Service Needed</label>
+              </li>
+            </ul>
+          </div>
+        </td>
+        <td class="col3"  valign="top">
+          <hr>
+          <div class="new_booking_item new_booking_payment">
+            <input type="radio" id="cash" name="payment" checked="checked" class="custom_radio"><label for="cash" class="radiobutton">Cash</label>
+            <input type="radio" id="debit_card" name="payment" class="custom_radio"><label for="debit_card" class="radiobutton">Debit Card</label>
+            <input type="radio" id="credit_card" name="payment" class="custom_radio"><label for="credit_card" class="radiobutton no-mrg">Credit Card</label>
+            <div class="summary">
+              <p><span>Account:</span>Benjamin Westrup</p>
+              <p><span>Jouney: </span>1hr 49min</p>
+              <p><span>Distance:</span>130.9km</p>
+              <p><span>Fare:</span>€654.70</p>
+              <p class="total"><span>TOTAL:</span>€654.70</p>
+            </div>
+            <%= button_tag(:class => 'btn btn_orange', :id =>"book_now") do %>
+              Book Now
+            <%end%>
+          </div>
+
+  	 		  <div class="new_booking_item new_booking_map" id="new_booking_map_id">
+  				  <h1>Map</h1>
+            <%= render :partial => "new_booking_map" %>
+  				</div>
+    		</td>
+     	</tr>
+    <% end %>
+   </table>
+ </div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#book_now").click(function() {
+      $('#pickup_time_id').val($('#pickup_time').val());
+      $('#dropoff_time_id').val($('#dropoff_time').val());
+      $('#number_of_bags_id').val($('#number_of_bags').val());
+      $('#number_of_passengers_id').val($('#number_of_passengers').val());
+      $('#number_of_vehicle_id').val($('#number_of_vehicle').val());
+    });
+  });
+</script>
+<script type="text/javascript">
+  jQuery(document).ready(function(){
+    jQuery("#booking_dropoff_addresses_attributes_0_address").change(function(event){
+      var pick_up_addr = $('#booking_pickup_addresses_attributes_0_address').val();
+      var drop_off_addr = $('#booking_dropoff_addresses_attributes_0_address').val();
+      if (pick_up_addr != ""){
+        $.ajax({
+          url: "<%= show_new_booking_map_path %>",
+          type: "get",
+          data: {'pick_up_addr': pick_up_addr, 'drop_off_addr' :drop_off_addr},
+          success: function(data){
+          }
+        });
+      }
+    });
+  });
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#recurrent_taxi").click(function() {
+      $.ajax({
+        url: "<%= get_address_path %>",
+        type: "get",
+        data: {},
+        dataType: 'JSON',
+        success: function(data){
+          $('#booking_pickup_addresses_attributes_0_address').val(data.pick_up_addr );
+          $('#booking_dropoff_addresses_attributes_0_address').val(data.drop_off_addr );
+          pick_up_addr = data.pick_up_addr
+          drop_off_addr = data.drop_off_addr
+          if (pick_up_addr != ""){
+            $.ajax({
+              url: "<%= show_new_booking_map_path %>",
+              type: "get",
+              data: {'pick_up_addr': pick_up_addr, 'drop_off_addr' :drop_off_addr},
+              success: function(data){
+              }
+            });
+          }
+        }
+      });
+    });
+  });
+</script>
+

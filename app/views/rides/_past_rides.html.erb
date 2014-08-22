@@ -1,0 +1,24 @@
+<% @rides.each do |ride|%>
+  <div class="grid_item_content">
+    <div class="clearfix">
+      <h2 class="fl-l"><%= past_date(ride.try(:pickup_datetime)) %> Taxi Ride:</h2>
+    </div>
+    <div class="current_rides_item">
+      <h3>Taxi Company:</h3>
+      <p><%= get_taxi_info(ride.taxi_info_id).try(:taxi_company_name)%></p>
+      <p><%= get_taxi_info(ride.taxi_info_id).try(:taxi_company_phone_no)%></p>
+    </div>
+    <div class="clearfix">
+      <div class="current_rides_item pickup fl-l">
+        <h3>Pickup:</h3>
+        <p><%= ride.showpickup_address(ride.id) %></p>
+        <p>Alexandria, VA 22314</p>
+      </div>
+      <div class="current_rides_item dropoff fl-l">
+        <h3>Drop Off:</h3>
+        <p><%= ride.showdropoff_address(ride.id) %></p>
+        <p>Alexandria, VA 22314</p>
+      </div>
+    </div>
+  </div>
+<% end %>

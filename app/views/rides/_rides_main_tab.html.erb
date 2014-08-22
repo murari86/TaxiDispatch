@@ -1,0 +1,25 @@
+<div class="content_wrap clearfix">
+  <div class="content_heading">
+    My Rides
+  </div>
+  <div class="content_nav tplshadow">
+    <ul>
+      <li class="first <%= get_rides_tab_status(params[:action], 'index') %>">
+        <%= link_to rides_path do %>
+          Current Rides<span class="content_nav_arrow"></span>
+        <% end %>
+      </li>
+      <li class="<%= get_rides_tab_status(params[:action], 'past_rides') %>">
+        <%= link_to past_rides_path do %>
+          Past rides<span class="content_nav_arrow"></span>
+        <% end %>
+      </li>
+      <li class="last <%= get_rides_tab_status(params[:action], 'cancelled_rides') %>">
+        <%= link_to cancelled_rides_path do %>
+          Cancelled Rides<span class="content_nav_arrow"></span>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+  <%= render :partial => get_rides_tabs_partial(params[:action])%>
+</div>

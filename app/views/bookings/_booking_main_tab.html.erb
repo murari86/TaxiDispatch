@@ -1,0 +1,21 @@
+<div class="content_wrap clearfix">
+  <div class="content_heading">
+    New Booking
+  </div>
+
+  <div class="content_nav dblshadow">
+    <ul>
+      <li class="first <%= get_tab_status(params[:action], 'new') %>">
+        <%= link_to new_booking_path do %>
+          New Booking<span class="content_nav_arrow"></span>
+        <% end %>
+      </li>
+      <li class="last <%= get_tab_status(params[:action], 'booking_history') %>">
+        <%= link_to booking_history_path do %>
+          Booking History<span class="content_nav_arrow"></span>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+  <%= render :partial => get_tabs_partial(params[:action])%>
+</div>

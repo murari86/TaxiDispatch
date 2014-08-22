@@ -1,0 +1,31 @@
+<div class="modal_wrap">
+  <%= form_for @booking, url: booking_path do |f| %>
+    <ul class="form_wrap clearfix">
+      <li>
+        <span>Pick Up:</span>
+        <%= f.fields_for :pickup_addresses do |pa|%>
+          <%= pa.text_field :address %>
+        <%end%>
+      </li>
+      <li>
+        <span>Drop Off:</span>
+        <%= f.fields_for :dropoff_addresses do |da|%>
+          <%= da.text_field :address %>
+        <%end%>
+      </li>
+      <li>
+          <span>Pickup_date:</span>
+          <%= f.text_field :pickup_datetime, :class =>"input_ico input_ico_date datepicker", :value => "#{edit_current_ride_pickup_date(@booking.pickup_datetime)}" %>
+      </li>
+      <li>
+          <span>Pickup_time:</span>
+          <%= f.text_field :pickup_time, :class=>"input_ico input_ico_time timespinner",  :value => "#{current_rides_pickup_time(@booking.pickup_time)}" %>
+      </li>
+    </ul>
+
+    <div class="modal_twobutton">
+      <%= f.submit "Save Changes", :class => "btn btn_orange" %>
+      <%= f.submit "Cancel", :type=> "button", :class => "btn btn_gray_onblack" , :disable => true%>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,19 @@
+<div class="modal_wrap">
+	<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+	  <%= devise_error_messages! %>
+
+	  <ul class="form_wrap clearfix">
+	    <li>
+	      Please enter your phone, e-mail or username to reset your password
+	    </li>
+	    <li>
+	      <span>Phone, Email, or Username:</span>
+	        <%= f.email_field :email, :autofocus => true %>
+	    </li>
+	  </ul>
+
+	  <%= f.submit "Password Reset", :class => "btn btn_orange" %>
+  <% end %>
+</div>
+
+

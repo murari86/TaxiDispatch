@@ -1,0 +1,76 @@
+<div class="content grid my_rides clearfix">
+  <div class="col3 col3_span fl-l">
+    <div class="grid_item current_rides gray_box">
+      <div class="grid_item_headings clearfix">
+        <h1 class="fl-l">Past Rides</h1>
+        <%= form_tag past_rides_path, :params => params, :remote => true, :method => "get" do %>
+        <div class="fl-r">
+          <ul class="form_wrap clearfix">
+            <li class="no-mrg">
+              <ul>
+                <li class="fl-l no-mrg">From <%= text_field_tag :pickup_datetime, params[:pickup_datetime], :placeholder =>"Start Date", :id => "date_pick_up", :class =>"input_ico input_ico_date datepicker"%></li>
+                <li class="fl-l no-mrg">&nbsp;to<%= text_field_tag :return_pickup_datetime, params[:return_pickup_datetime], :placeholder =>"End Date", :id => "return_date_pick_up", :class => "input_ico input_ico_date datepicker"%></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <% end %>
+      </div>
+      
+      <hr>
+      <div class="content_wrap clearfix", id = "past_rides">
+        <%= render :partial => 'past_rides' %>
+      </div>
+    </div>
+    <div class="pagination fl-r clearfix">
+    <div class="fl-l">
+      <%= will_paginate @rides, :class=>"paging_full_numbers"%>
+    </div>
+  </div> 
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#date_pick_up, #return_date_pick_up").change(function(event){
+          if( $("#date_pick_up").val() != "" && $("#return_date_pick_up").val() != "" ){
+            $.ajax({
+              url: "<%= past_rides_path %>",
+              type: "GET",
+              data: {'pickup_datetime': $("#date_pick_up").val() , 'return_pickup_datetime': $("#return_date_pick_up").val() },
+              success: function(data){}
+            });
+          }
+        });
+      });
+    </script>
+
+  </div>
+  <div class="col3 sidebar fl-r">
+    <div class="grid_item gray_box">
+      <div class="grid_item_headings clearfix">
+        <h1>Schedule Rides</h1>
+      </div>
+      <hr>
+      <%= render :partial => 'schedule_rides' %>
+
+    </div>
+    <div class="grid_item  all_current_rides gray_box">
+      <div class="grid_item_headings clearfix">
+        <h1>All Past Rides</h1>
+      </div>
+      <hr>
+      <% @rides.each do |past_rides|%>
+      <div class="grid_item_content">
+        <div class="all_current_rides_item">
+          <p>
+            <strong><%= current_rides_pickup_date(past_rides.try(:pickup_datetime))%> at <%= current_rides_pickup_time(past_rides.try(:pickup_time))%></strong>
+          </p>
+          <p>
+            <%= past_rides.showpickup_address(past_rides.id) %>
+              <a href="#">View Details</a>
+          </p>
+        </div>
+      </div>
+      <%end%>
+    </div>
+  </div>
+</div>
+    

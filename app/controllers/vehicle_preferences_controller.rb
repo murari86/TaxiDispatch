@@ -1,0 +1,3 @@
+class VehiclePreferencesController < ApplicationController
+
+end

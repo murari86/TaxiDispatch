@@ -1,0 +1,85 @@
+<%= render :partial => "layouts/masseges"%>
+<div class="content grid my_rides clearfix">
+  <div class="col3 col3_span fl-l">
+    <div class="grid_item current_rides gray_box">
+      <div class="grid_item_headings clearfix">
+          <h1>Current Ride</h1>
+      </div>
+      <hr>
+      <div class="grid_item_content">
+        <div class="clearfix">
+          <h2 class="fl-l"><%= current_rides_pickup_date(@rides.try(:pickup_datetime)) %> Taxi Ride:</h2>
+          <% unless (@rides.try(:id)).blank?%>
+          <%= link_to 'Cancle Ride',{:action => "destroy", :controller => "rides", :id => @rides.try(:id)},
+            :confirm => 'Are you sure?', :method => :delete , :class => "btn_orange fixed_width fl-r"%>
+          <% end %>
+          <%= link_to "Edit Details", edit_booking_path(@rides.try(:id)), :class => "modal_ajax btn btn_orange fixed_width fl-r cboxElement", :title => "Edit Details" %>
+          
+        </div>
+        <div class="current_rides_item">
+          <h3>Taxi Company:</h3>
+          <p><%= @texi.try(:taxi_company_name)%></p>
+          <p><%= @texi.try(:taxi_company_phone_no)%></p>
+        </div>
+        <div class="clearfix">
+          <div class="current_rides_item pickup fl-l">
+            <h3>Pickup:</h3>
+            <p><%= @pickup_address.try(:address) %></p>
+          </div>
+          <div class="current_rides_item dropoff fl-l">
+            <h3>Drop Off:</h3>
+            <p><%= @dropoff_address.try(:address) %></p>
+          </div>
+        </div>
+      </div>
+      <div class="current_rides_map">
+        <div id="map" class="map_holder"></div>    
+      </div>
+    </div>
+  </div>
+  <div class="col3 sidebar fl-r">
+    <div class="grid_item gray_box">
+      <div class="grid_item_headings clearfix">
+        <h1>Schedule Rides</h1>
+      </div>
+      <hr>
+        <%= render :partial => 'schedule_rides' %>
+    </div>
+    <div class="grid_item  all_current_rides gray_box">
+      <div class="grid_item_headings clearfix">
+        <h1>All Current Rides</h1>
+      </div>
+      <hr>
+      <% i= 1 %>
+      <% @all_current_rides.each do |all_rides|%>
+        <div class="grid_item_content">
+          <div class="all_current_rides_item">
+            <p>
+              <strong><%= current_rides_pickup_date(all_rides.try(:pickup_datetime))%> at <%= current_rides_pickup_time(all_rides.try(:pickup_time))%></strong>
+            </p>
+            <p>
+              <%= @pickup_address.try(:address) %>
+              <% if (i!=2) %>
+                <% i=i+1 %>
+                <span class="current_rides_highlight">Current Rides</span>
+              <% else %>
+                <a href="#" id ="view_current_ride">View Details</a>
+              <% end %>
+            </p>
+          </div>
+        </div>
+      <%end%>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $("#view_current_ride").click(function(){
+    alert("murari");
+      
+      });
+    });
+  });
+</script>
+  
+

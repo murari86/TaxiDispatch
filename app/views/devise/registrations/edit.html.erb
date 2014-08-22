@@ -1,0 +1,31 @@
+<div class="modal_wrap">
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+    <%= devise_error_messages! %>
+
+    <ul class="form_wrap clearfix">
+      <li>
+          <span>First Name:</span>
+          <%= f.text_field :first_name %>
+      </li>
+      <li>
+          <span>Last Name:</span>
+          <%= f.text_field :last_name %>
+      </li>
+      <li>
+          <span>Email Address:</span>
+          <%= f.email_field :email %>
+      </li>
+      <li>
+          <span>Mobile Number:</span>
+          <%= f.text_field :phone_no %>
+      </li>
+    </ul>
+
+    <div class="modal_twobutton">
+      <%= f.submit "Save Changes", :class => "btn btn_orange" %>
+      <%= f.button "Cancel", :type=> "button",:class => "btn btn_gray_onblack btn", :disable => true%>
+    </div>
+  <% end %>
+</div>
+
+

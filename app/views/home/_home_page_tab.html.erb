@@ -1,0 +1,20 @@
+<div class="content_heading">
+  Web Booking Taxi Service
+</div>
+
+<div class="content_nav dblshadow">
+  <ul>
+    <li class="first <%= get_home_tab_status(params[:action], 'index') %>">
+      <%= link_to root_path do %>
+        View Map<span class="content_nav_arrow"></span>
+      <% end %>
+    </li>
+    <li class="last <%= get_tab_status(params[:action], 'pickup_and_dropoff') %>">
+      <%= link_to '#' do %>
+        Pick Up &amp; Drop Off<span class="content_nav_arrow"></span>
+      <% end %>
+    </li>
+  </ul>
+</div>
+<%= render :partial => "layouts/masseges"%>
+<%= render :partial => get_home_tabs_partial(params[:action])%>

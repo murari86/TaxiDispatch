@@ -1,0 +1,48 @@
+<div class="content_wrap clearfix">
+	<div class="content booking_history gray_box clearfix">
+    <%= form_tag booking_history_path, :method => "get" do %>  
+    <div class="table_filters">
+      <ul class="form_wrap clearfix">
+        <li class="fl-l"><%= text_field_tag :pickup_address, params[:pickup_address], :placeholder => 'filter by address', :class => "input_ico input_ico_search" %></li>
+        <li class="fl-l"><%= text_field_tag :pickup_datetime, params[:pickup_datetime], :placeholder => 'filter by date', :class => "input_ico input_ico_search" %></li>
+        <li class="fl-l"><%= text_field_tag :pickup_time, params[:pickup_time], :placeholder => 'filter by time', :class => "input_ico input_ico_time pickup_time timespinner" %></li>
+      </ul>
+    </div>
+    <% end %>
+    <table id="booking_history" class="display">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Pickup &amp; Drop Off</th>
+          <th>Distance</th>
+          <th>Payment</th>
+          <th>Passenger</th>
+          <th>Driver</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @bookings.each do |booking|%>
+        <tr>
+          <td><%= booking_pickup_date(booking.try(:pickup_datetime))%>, <%= booking_pickup_time(booking.try(:pickup_time))%></td>
+          <td><%= booking.showpickup_address(booking.id) rescue ""%> & <%= booking.showdropoff_address(booking.id) %></td>
+          <td><%= booking.calculate_distance(booking.id) rescue ""%> km</td>
+          <td>€ <%= booking.calculate_distance(booking.id)*2 rescue 0 %></td>
+          <td><%= booking.passenger_name %></td>
+          <td><%= booking.taxi_driver(booking.taxi_info_id) %></td>
+          <td><%= show_status(booking.try(:pickup_datetime), booking.try(:pickup_time), booking.try(:return_pickup_datetime), booking.try(:dropoff_time)) rescue 0 %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>  
+  </div>
+  <div class="pagination fl-r clearfix">
+    <div class="fl-l">
+      <%= will_paginate @bookings, :class=>"paging_full_numbers"%>
+    </div>
+  </div> 
+  <%= link_to "Create a New Booking", new_booking_path, :class => "btn btn_orange"  %>
+</div>
+
+            
+       

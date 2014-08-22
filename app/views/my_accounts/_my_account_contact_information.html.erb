@@ -1,0 +1,13 @@
+<div class="grid_item gray_box contact_information">
+  <div class="grid_item_headings clearfix">
+    <h1 class="fl-l">Contact Information</h1>
+    <%= link_to "Edit details", edit_user_registration_path, :class => "modal_ajax btn btn_orange fixed_width fl-r", :title => "Edit Personal Information" %>
+  </div>
+  <hr>
+  <div class="grid_item_content">
+    <p><span>First Name:</span><%= current_user.first_name %></p>
+    <p><span>Last Name:</span><%= current_user.last_name %></p>
+    <p><span>Email Address:</span><%= current_user.email %></p>
+    <p><span>Mobile Phone:</span><%= current_user.phone_no %></p>
+  </div>
+</div>

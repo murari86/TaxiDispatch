@@ -1,0 +1,1 @@
+(function(){this.Gmaps.Objects.Builders=function(n,i,t){return i.PRIMITIVES=t,n.OBJECT=i,n.PRIMITIVES=t,{build:function(i,t,u){var r;return r=new n(i,t,u),r.build()}}}}).call(this);

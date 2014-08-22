@@ -1,0 +1,15 @@
+<% @scheduled_rides.each do |scheduled_rides|%>  
+  <div class="grid_item_content">
+  <% if scheduled_rides %>
+    <p>
+      <strong><%= current_rides_pickup_date(scheduled_rides.try(:pickup_datetime))%> at <%= current_rides_pickup_time(scheduled_rides.try(:pickup_time))%></strong>
+    </p>
+    <p>
+      <%= scheduled_rides.showpickup_address(scheduled_rides.id) %>
+      <a href="#">View Details</a> 
+    </p>
+  <% else %>                     
+    <strong>You have no upcoming rides</strong>
+  <% end %>    
+  </div>
+<% end %> 

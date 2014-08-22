@@ -1,0 +1,20 @@
+<div class="modal_wrap">
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+  <%= render :partial => "layouts/masseges"%>
+    <ul class="form_wrap clearfix">
+    	<li>
+    		<span>Username:</span>
+    		<%= f.email_field :email, :placeholder => "Administrator", :autofocus => true, :class => "input_ico_right input_ico_user" %>
+    	</li>
+		<li>
+			<span>Password:</span>
+			<%= f.password_field :password, :placeholder => "Password", :class => "input_ico_right input_ico_password" %>
+			<%= link_to 'Forgot your password?', new_user_password_path, :class => "modal_ajax cboxElement", :id => "forget-password", target:"blank", :title => "" %>
+		</li>
+    </ul>
+    <% if devise_mapping.rememberable? -%>
+      <%= f.check_box :remember_me, :class => "custom_checkbox" %> <%= f.label :remember_me, "Keep me logged in", :class => "keep_logged checkbox" %>
+    <% end -%>
+    <%= f.submit "Log In", :class => "btn btn_orange" %>
+  <% end %>
+</div>

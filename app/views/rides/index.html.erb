@@ -1,0 +1,13 @@
+<%= render :partial=> 'rides_main_tab'%>
+<script>
+handler = Gmaps.build('Google', { markers: { maxRandomDistance: null } });
+handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers(<%=raw @hash.to_json %>);
+  markers = handler.addMarkers(<%=raw @hash1.to_json %>);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+  handler.getMap().setZoom(12);
+  handler.getMode('DRIVING');
+  handler.direction_conf.display_panel(true);
+});
+</script>

@@ -1,0 +1,18 @@
+<div class="content_wrap clearfix">
+
+  <div class="content_heading">
+    My Account
+  </div>  
+  <%= render :partial => "layouts/masseges"%>
+  <div class="content grid my_account clearfix">
+    <div class="col2 fl-l">
+      <%= render :partial => "my_account_contact_information" %>
+      <%= render :partial => "my_account_change_password" %>
+    </div>
+
+    <div class="col2 fl-r">
+      <%= render :partial => "my_account_credit_card" %>
+      <%= render :partial => "my_account_notification" %>
+    </div>
+  </div>
+</div>

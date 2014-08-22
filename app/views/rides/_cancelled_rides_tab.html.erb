@@ -1,0 +1,41 @@
+<div class="content grid my_rides clearfix">
+  <div class="col3 col3_span fl-l">
+    <div class="grid_item current_rides gray_box">
+      <div class="grid_item_headings clearfix">
+        <h1 class="fl-l">Cancelled Rides</h1>
+        <div class="fl-r">
+          <ul class="form_wrap clearfix">
+            <li class="no-mrg">
+              <ul>
+                <li class="fl-l no-mrg">From <input type="text" value="Start Date" class="input_ico input_ico_date datepicker"></li>
+                <li class="fl-l no-mrg">&nbsp;to<input type="text" value="End Date" class="input_ico input_ico_date datepicker"></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <hr>
+      <div class="grid_item_content">
+        <p class="norides_promt">Once you cancel any rides, they will appear here. You can search for your rides by specifying dates on the calendar above.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col3 sidebar fl-r">
+    <div class="grid_item gray_box">
+      <div class="grid_item_headings clearfix">
+        <h1>Schedule Rides</h1>
+      </div>
+      <hr>
+        <%= render :partial => 'schedule_rides' %>
+    </div>
+    <div class="grid_item  all_current_rides gray_box">
+      <div class="grid_item_headings clearfix">
+        <h1>All Cancelled Rides</h1>
+      </div>
+      <hr>
+      <div class="grid_item_content">
+        <strong>You have no Cancelled Rides</strong>
+      </div>
+    </div>
+  </div>
+</div>
